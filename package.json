@@ -1,11 +1,11 @@
 {
-  "name": "restify-beyond",
+  "name": "express-beyond",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "babel-preset-env": "^1.6.0",
-    "restify": "^6.0.0"
+    "express": "^4.15.4"
   },
   "devDependencies": {},
   "scripts": {
