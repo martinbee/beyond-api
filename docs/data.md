@@ -10,7 +10,6 @@
 - id
 - lift
 - week
-- weight
 - trainingMax
 - maxReps
 - jokerSets
