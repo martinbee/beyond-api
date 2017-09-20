@@ -1,6 +1,5 @@
 const myLogger = (req, res, next) => {
-  console.log(req);
-  console.log(`${req} at ${new Date()}`);
+  console.log(`Request at ${Date.now()}`);
   next();
 };
 
