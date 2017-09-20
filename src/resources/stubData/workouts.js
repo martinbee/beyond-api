@@ -1,4 +1,4 @@
-[
+export default [
   {
     "lift": "squat",
     "week": 1,
@@ -67,4 +67,4 @@
     "lastSetFirst": true,
     "userId": null,
   },
-]
+];
