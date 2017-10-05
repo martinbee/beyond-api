@@ -1,22 +1,21 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 
-//import initStubData from './utilities/init/initStubData';
-import myLogger from './middleware/myLogger';
-import setupRoutes from './utilities/setupRoutes';
+import {
+  //initStubData,
+  setupMiddleware,
+  setupRoutes,
+  setupErrorHandling,
+} from './utilities';
 
-//
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 // if init of data is needed, uncomment:
 //initStubData();
 
-const app = express();
-const PORT = 3000;
-
-app.use(myLogger);
-app.use(bodyParser.json());
-
+setupMiddleware(app);
 setupRoutes(app);
+setupErrorHandling(app);
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
-});
+app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
