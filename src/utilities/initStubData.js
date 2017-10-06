@@ -1,30 +1,21 @@
-//import users from '../../data/users';
-//import workouts from '../../data/workouts';
-//import { MongoClient } from 'mongodb';
-//import dotenv from 'dotenv';
+import stubUser from './stubData/user';
+import stubWorkouts from './stubData/workouts';
+import User from '../users/model';
+import Workout from '../workouts/model';
 
-//if (process.env.NODE_ENV !== 'production') dotenv.load();
+export default function initStubData() {
+  const user = new User(stubUser);
 
-//export default async function() {
-  //try {
-    //const db = await MongoClient.connect(process.env.DB_URI);
-    //console.log("Connected correctly to server");
+  user.save((err) => {
+    if (err) throw new Error(err.message);
 
-    //const response = await db.collection('users').insertMany(users);
-    //const userIds = response.insertedIds;
-    //console.log("Inserted stub users");
+    stubWorkouts.forEach((stubWorkout) => {
+      const workout = new Workout(stubWorkout);
+      workout.userId = user._id;
 
-    //userIds.forEach(userId => {
-      //workouts.forEach(async function(workout) {
-        //const workoutAttachedToUser = { ...workout, userId };
-
-        //await db.collection('workouts').insertOne(workoutAttachedToUser);
-      //});
-    //});
-    //console.log("Attached workouts to users and inserted.");
-
-    //db.close();
-  //} catch(e) {
-    //console.log(e.stack);
-  //}
-//};
+      workout.save((error) => {
+        if (error) throw new Error(error.message);
+      });
+    });
+  });
+}

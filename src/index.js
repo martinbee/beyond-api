@@ -1,18 +1,20 @@
 import express from 'express';
 
 import {
-  //initStubData,
+  connectMongoose,
+  initStubData,
   setupMiddleware,
   setupRoutes,
   setupErrorHandling,
 } from './utilities';
 
+connectMongoose();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // if init of data is needed, uncomment:
-//initStubData();
+initStubData();
 
 setupMiddleware(app);
 setupRoutes(app);

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema, model } = mongoose;
+const Schema = mongoose.Schema;
 
 const TrainingMaxSchema = new Schema({
   press: {
@@ -29,4 +29,4 @@ const UserSchema = new Schema({
   trainingMax: TrainingMaxSchema,
 });
 
-export default model('user', UserSchema);
+export default mongoose.model('user', UserSchema);

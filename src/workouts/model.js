@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema, model } = mongoose;
+const Schema = mongoose.Schema;
 
 const SetSchema = new Schema({
   weight: {
@@ -57,4 +57,4 @@ const WorkoutSchema = new Schema({
   cardio: CardioSchema,
 });
 
-export default model('workout', WorkoutSchema);
+export default mongoose.model('workout', WorkoutSchema);
