@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const TrainingMaxSchema = new Schema({
+  _id: false,
   press: {
     type: Number,
     required: true,

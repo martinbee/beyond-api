@@ -30,7 +30,7 @@ export default [
         reps: 5,
       },
     ],
-    jokersets: [
+    jokerSets: [
       {
         weight: 100,
         reps: 2,
@@ -44,9 +44,19 @@ export default [
         reps: 1,
       },
     ],
+    firstSetLast: {
+      weight: 60,
+      sets: [
+        { reps: 3 },
+        { reps: 3 },
+        { reps: 3 },
+        { reps: 3 },
+        { reps: 3 },
+      ],
+    },
     accessoryLifts: [
       {
-        excercise: 'pull-ups',
+        exercise: 'pull-ups',
         sets: [
           {
             weight: 0,
@@ -63,7 +73,7 @@ export default [
         ],
       },
       {
-        excercise: 'incline press',
+        exercise: 'incline press',
         sets: [
           {
             weight: 45,
@@ -81,7 +91,7 @@ export default [
       },
     ],
     cardio: {
-      excercise: 'prowler',
+      exercise: 'prowler',
       notes: '95, 135, 185, 225',
     },
   },
@@ -116,7 +126,7 @@ export default [
         reps: 5,
       },
     ],
-    jokersets: [
+    jokerSets: [
       {
         weight: 225,
         reps: 2,
@@ -126,9 +136,19 @@ export default [
         reps: 1,
       },
     ],
+    firstSetLast: {
+      weight: 180,
+      sets: [
+        { reps: 3 },
+        { reps: 3 },
+        { reps: 3 },
+        { reps: 3 },
+        { reps: 3 },
+      ],
+    },
     accessoryLifts: [
       {
-        excercise: 'front squat',
+        exercise: 'front squat',
         sets: [
           {
             weight: 75,
@@ -145,7 +165,7 @@ export default [
         ],
       },
       {
-        excercise: 'ab raise',
+        exercise: 'ab raise',
         sets: [
           {
             weight: 0,
@@ -163,7 +183,7 @@ export default [
       },
     ],
     cardio: {
-      excercise: 'prowler',
+      exercise: 'prowler',
       notes: '95, 135, 185, 225',
     },
   },
