@@ -16,6 +16,7 @@
 
 | Property                         | Type             | Description                              |
 | :---                             | :---             | :---                                     |
+| `userId`                         | string           | Who's workout is it                      |
 | `liftType`                       | string           | Type of lift (bench, press, etc.)        |
 | `mobilityWork`                   | boolean          | Whether or not mobility work was done    |
 | `warmups`                        | array of objects | Warmups before core lift                 |
@@ -32,10 +33,10 @@
 | `firstSetLast - sets`            | array of objects | Sets of deload                           |
 | `firstSetLast - sets - reps`     | integer          | Each set consists of a number of reps    |
 | `accessoryLifts`                 | array of objects | Accessory lift                           |
-| `accessoryLifts - type`          | string           | The type of accessory lift               |
+| `accessoryLifts - exercise`      | string           | The type of accessory lift               |
 | `accessoryLifts - sets`          | array of objects | Accessory lift sets                      |
 | `accessoryLifts - sets - reps`   | integer          | Accessory lift set reps                  |
 | `accessoryLifts - sets - weight` | integer          | Accessory lift set weight                |
 | `cardio`                         | array of objects | Cardio work done                         |
-| `cardio - type`                  | string           | The type of cardio                       |
+| `cardio - exercise`              | string           | The type of cardio                       |
 | `cardio - notes`                 | string           | Notes on the cardio workout              |
