@@ -8,11 +8,15 @@ const {
 } = process.env;
 
 const options = {
-
+  useMongoClient: true,
 };
 
 export default function connectMongoose() {
+  console.log('Connecting mongoose to mongo...');
+
   mongoose.connect(DB_URI, options, (err) => {
     if (err) throw new Error(err.message);
+
+    console.log('Mongoose connected!');
   });
 }
