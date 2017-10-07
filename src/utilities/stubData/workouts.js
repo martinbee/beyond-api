@@ -2,61 +2,86 @@ export default [
   {
     liftType: 'press',
     mobilityWork: true,
-    warmups: [
+    exercises: [
       {
-        weight: 50,
-        reps: 5,
+        type: 'warmup',
+        sets: [
+          {
+            weight: 50,
+            reps: 5,
+          },
+          {
+            weight: 60,
+            reps: 5,
+          },
+          {
+            weight: 70,
+            reps: 3,
+          },
+        ],
       },
       {
-        weight: 60,
-        reps: 5,
+        type: 'coreLift',
+        sets: [
+          {
+            weight: 60,
+            reps: 5,
+          },
+          {
+            weight: 80,
+            reps: 5,
+          },
+          {
+            weight: 90,
+            reps: 3,
+          },
+        ],
       },
       {
-        weight: 70,
-        reps: 3,
-      },
-    ],
-    coreLifts: [
-      {
-        weight: 60,
-        reps: 5,
-      },
-      {
-        weight: 80,
-        reps: 5,
-      },
-      {
-        weight: 90,
-        reps: 5,
-      },
-    ],
-    jokerSets: [
-      {
-        weight: 100,
-        reps: 2,
+        type: 'jokerSets',
+        sets: [
+          {
+            weight: 100,
+            reps: 2,
+          },
+          {
+            weight: 105,
+            reps: 1,
+          },
+          {
+            weight: 110,
+            reps: 1,
+          },
+        ],
       },
       {
-        weight: 105,
-        reps: 1,
+        type: 'firstSetLast',
+        sets: [
+          {
+            weight: 60,
+            reps: 3,
+          },
+          {
+            weight: 60,
+            reps: 3,
+          },
+          {
+            weight: 60,
+            reps: 3,
+          },
+          {
+            weight: 60,
+            reps: 3,
+          },
+          {
+            weight: 60,
+            reps: 3,
+          },
+        ],
       },
       {
-        weight: 110,
-        reps: 1,
-      },
-    ],
-    firstSetLast: {
-      weight: 60,
-      sets: [
-        { reps: 3 },
-        { reps: 3 },
-        { reps: 3 },
-        { reps: 3 },
-        { reps: 3 },
-      ],
-    },
-    accessoryLifts: [
-      {
-        exercise: 'pull-ups',
+        type: 'accessory',
+        subType: 'pull-ups',
         sets: [
           {
             weight: 0,
@@ -73,7 +98,8 @@ export default [
         ],
       },
       {
-        exercise: 'incline press',
+        type: 'accessory',
+        subType: 'incline press',
         sets: [
           {
             weight: 45,
@@ -89,66 +115,92 @@ export default [
           },
         ],
       },
+      {
+        type: 'cardio',
+        subType: 'prowler',
+        notes: '95, 135, 185, 225',
+      },
     ],
-    cardio: {
-      exercise: 'prowler',
-      notes: '95, 135, 185, 225',
-    },
   },
   {
     liftType: 'deadLift',
     mobilityWork: true,
-    warmups: [
+    exercises: [
       {
-        weight: 135,
-        reps: 3,
+        type: 'warmup',
+        sets: [
+          {
+            weight: 135,
+            reps: 3,
+          },
+          {
+            weight: 150,
+            reps: 3,
+          },
+          {
+            weight: 160,
+            reps: 3,
+          },
+        ],
       },
       {
-        weight: 150,
-        reps: 3,
+        type: 'coreLift',
+        sets: [
+          {
+            weight: 180,
+            reps: 5,
+          },
+          {
+            weight: 200,
+            reps: 5,
+          },
+          {
+            weight: 220,
+            reps: 5,
+          },
+        ],
       },
       {
-        weight: 160,
-        reps: 3,
-      },
-    ],
-    coreLifts: [
-      {
-        weight: 180,
-        reps: 5,
-      },
-      {
-        weight: 200,
-        reps: 5,
-      },
-      {
-        weight: 220,
-        reps: 5,
-      },
-    ],
-    jokerSets: [
-      {
-        weight: 225,
-        reps: 2,
+        type: 'jokerSets',
+        sets: [
+          {
+            weight: 225,
+            reps: 2,
+          },
+          {
+            weight: 230,
+            reps: 1,
+          },
+        ],
       },
       {
-        weight: 230,
-        reps: 1,
+        type: 'firstSetLast',
+        sets: [
+          {
+            weight: 180,
+            reps: 3,
+          },
+          {
+            weight: 180,
+            reps: 3,
+          },
+          {
+            weight: 180,
+            reps: 3,
+          },
+          {
+            weight: 180,
+            reps: 3,
+          },
+          {
+            weight: 180,
+            reps: 3,
+          },
+        ],
       },
-    ],
-    firstSetLast: {
-      weight: 180,
-      sets: [
-        { reps: 3 },
-        { reps: 3 },
-        { reps: 3 },
-        { reps: 3 },
-        { reps: 3 },
-      ],
-    },
-    accessoryLifts: [
       {
-        exercise: 'front squat',
+        type: 'accessory',
+        subType: 'front squat',
         sets: [
           {
             weight: 75,
@@ -165,7 +217,8 @@ export default [
         ],
       },
       {
-        exercise: 'ab raise',
+        type: 'accessory',
+        subType: 'hanging abs',
         sets: [
           {
             weight: 0,
@@ -181,10 +234,11 @@ export default [
           },
         ],
       },
+      {
+        type: 'cardio',
+        subType: 'prowler',
+        notes: '95, 135, 185, 225',
+      },
     ],
-    cardio: {
-      exercise: 'prowler',
-      notes: '95, 135, 185, 225',
-    },
   },
 ];
