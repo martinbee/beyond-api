@@ -35,6 +35,10 @@ const WorkoutSchema = new Schema(
       type: String,
       required: true,
     },
+    week: {
+      type: Number,
+      required: true,
+    },
     mobilityWork: {
       type: Boolean,
       required: true,

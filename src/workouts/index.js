@@ -2,6 +2,7 @@ import express from 'express';
 
 import {
   getAll,
+  create,
   get,
   update,
 } from './controller';
@@ -15,5 +16,8 @@ router.route('/')
 router.route('/:id')
   .get(get)
   .patch(update);
+
+router.route('/:userId')
+  .post(create);
 
 export default router;

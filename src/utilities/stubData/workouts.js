@@ -1,6 +1,7 @@
 export default [
   {
     liftType: 'press',
+    week: 1,
     mobilityWork: true,
     exercises: [
       {
@@ -124,6 +125,7 @@ export default [
   },
   {
     liftType: 'deadLift',
+    week: 1,
     mobilityWork: true,
     exercises: [
       {
@@ -221,8 +223,7 @@ export default [
         subType: 'hanging abs',
         sets: [
           {
-            weight: 0,
-            reps: 8,
+            weight: 0, reps: 8,
           },
           {
             weight: 0,

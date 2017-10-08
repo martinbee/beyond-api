@@ -3,6 +3,7 @@ import initStubData from './initStubData';
 import setupErrorHandling from './setupErrorHandling';
 import setupMiddleware from './setupMiddleware';
 import setupRoutes from './setupRoutes';
+import isValidObjectId from './isValidObjectId';
 
 export {
   connectMongoose,
@@ -10,4 +11,5 @@ export {
   setupErrorHandling,
   setupMiddleware,
   setupRoutes,
+  isValidObjectId,
 };
