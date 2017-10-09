@@ -1,8 +1,13 @@
+const today = new Date();
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
 export default [
   {
     liftType: 'press',
     week: 1,
     mobilityWork: true,
+    createdAt: yesterday.toISOString(),
     exercises: [
       {
         type: 'warmup',
@@ -127,6 +132,7 @@ export default [
     liftType: 'deadLift',
     week: 1,
     mobilityWork: true,
+    createdAt: today.toISOString(),
     exercises: [
       {
         type: 'warmup',

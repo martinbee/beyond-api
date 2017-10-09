@@ -4,8 +4,9 @@ export default async function create(req, res, next) {
   const { userId } = req.body;
 
   const lastWorkoutQuery = {
-    userId,
+    user: userId,
   };
+
   const lastWorkoutFields = {
 
   };
