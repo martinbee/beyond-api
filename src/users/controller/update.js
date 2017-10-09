@@ -7,10 +7,8 @@ export default function update(req, res, next) {
   User
     .findByIdAndUpdate(id, updates, { new: true })
     .exec((err, user) => {
-      if (err) {
-        next(err);
-      } else {
-        res.send(user);
-      }
+      if (err) return next(err);
+
+      return res.send(user);
     });
 }

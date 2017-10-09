@@ -1,3 +1,7 @@
+// handle errors
+// handle first workout condition
+// add workout calculations
+// create new workout
 import mongoose from 'mongoose';
 
 import Workout from '../model';
@@ -23,25 +27,24 @@ export default async function create(req, res, next) {
   };
 
   // can't sort using findOne, have to grab all, limit, then use cursor
+  // add try catch or error handler here
   const lastWorkoutCursor = await Workout.find(lastWorkoutQuery, lastWorkoutFields)
     .sort(lastWorkoutSort)
     .limit(1)
     .populate('user', 'trainingMax');
+
   const lastWorkout = lastWorkoutCursor[0];
 
-  const week = 3;
-  const liftType = 'squat';
-  const { user } = lastWorkout;
+  // what if first week of workout?!
+  const { week, liftType, user } = lastWorkout;
 
   const trainingMax = (
     isEndOfMesocycle(week, liftType) ? updateUserTrainingMax() : user.trainingMax
   );
-  console.log(trainingMax);
 
-  // get next lift
   const nextLiftType = getNextLiftType(liftType);
-  // get related tm
   const liftTrainingMax = trainingMax[nextLiftType];
+
   // calculate new workouts percentages
   // function call
 

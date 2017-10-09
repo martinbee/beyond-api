@@ -7,10 +7,8 @@ export default function update(req, res, next) {
   Workout
     .findByIdAndUpdate(id, updates, { new: true })
     .exec((err, workout) => {
-      if (err) {
-        next(err);
-      } else {
-        res.send(workout);
-      }
+      if (err) return next(err);
+
+      return res.send(workout);
     });
 }
