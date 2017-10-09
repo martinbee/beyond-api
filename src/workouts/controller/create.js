@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import Workout from '../model';
 import {
   getNextLiftType,
+  isEndOfMesocycle,
+  updateUserTrainingMax,
 } from '../utilities';
 
 export default async function create(req, res, next) {
@@ -20,23 +22,29 @@ export default async function create(req, res, next) {
     createdAt: -1,
   };
 
-  // rethink to get one not an array!
-  const lastWorkout = await Workout.find(lastWorkoutQuery, lastWorkoutFields)
+  // can't sort using findOne, have to grab all, limit, then use cursor
+  const lastWorkoutCursor = await Workout.find(lastWorkoutQuery, lastWorkoutFields)
     .sort(lastWorkoutSort)
     .limit(1)
-    .populate('user');
+    .populate('user', 'trainingMax');
+  const lastWorkout = lastWorkoutCursor[0];
 
-  const { week, liftType, user } = lastWorkout[0];
+  const week = 3;
+  const liftType = 'squat';
+  const { user } = lastWorkout;
 
-  console.log(liftType);
-  const nextLiftType = getNextLiftType(liftType);
-  console.log(nextLiftType);
-  // check week and lift for TM bump (if required update user)
-  // using lift order constant, if last workout in order and week 3, update
+  const trainingMax = (
+    isEndOfMesocycle(week, liftType) ? updateUserTrainingMax() : user.trainingMax
+  );
+  console.log(trainingMax);
 
   // get next lift
+  const nextLiftType = getNextLiftType(liftType);
   // get related tm
+  const liftTrainingMax = trainingMax[nextLiftType];
   // calculate new workouts percentages
+  // function call
+
   // create new workout and return to client
 
   //const newWorkout = new Workout(req.body);
