@@ -1,7 +1,20 @@
 import Workout from '../model';
 
-export default function create(req, res, next) {
+export default async function create(req, res, next) {
   const { userId } = req.body;
+
+  const lastWorkoutQuery = {
+    userId,
+  };
+  const lastWorkoutFields = {
+
+  };
+  const lastWorkoutSort = {
+
+  };
+
+db.col.find().sort({"datetime": -1}).limit(1)
+  const lastWorkout = await Workout.findOne(lastWorkoutQuery);
 
   // find most recent workout (date_created) with that userId
 

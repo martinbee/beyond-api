@@ -13,7 +13,7 @@ export default function initStubData() {
 
     stubWorkouts.forEach((stubWorkout) => {
       const workout = new Workout(stubWorkout);
-      workout.userId = user._id;
+      workout.user = user._id;
 
       workout.save((error) => {
         if (error) throw new Error(error.message);

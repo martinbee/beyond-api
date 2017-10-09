@@ -27,8 +27,9 @@ const ExerciseSchema = new Schema({
 
 const WorkoutSchema = new Schema(
   {
-    userId: {
-      type: String,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
     liftType: {
