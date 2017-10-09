@@ -1,21 +1,29 @@
+import mongoose from 'mongoose';
+
 import Workout from '../model';
 
 export default async function create(req, res, next) {
   const { userId } = req.body;
+  console.log(userId);
+  const user = mongoose.Types.ObjectId(userId);
+  console.log(user);
 
   const lastWorkoutQuery = {
-    user: userId,
+    user,
   };
-
   const lastWorkoutFields = {
-
+    liftType: 1,
+    week: 1,
   };
   const lastWorkoutSort = {
-
+    createdAt: -1,
   };
 
-db.col.find().sort({"datetime": -1}).limit(1)
-  const lastWorkout = await Workout.findOne(lastWorkoutQuery);
+  const lastWorkout = await Workout.find(lastWorkoutQuery, lastWorkoutFields)
+    .sort(lastWorkoutSort)
+    .limit(1)
+    .populate('user');
+  console.log(lastWorkout);
 
   // find most recent workout (date_created) with that userId
 
