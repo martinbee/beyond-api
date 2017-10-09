@@ -1,11 +1,11 @@
-import getAll from './getAll';
-import get from './get';
+import list from './list';
+import show from './show';
 import update from './update';
 import create from './create';
 
 export {
-  getAll,
-  get,
+  list,
+  show,
   update,
   create,
 };

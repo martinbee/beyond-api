@@ -1,8 +1,7 @@
 import Workout from '../model';
 
 export default function create(req, res, next) {
-  const { userId } = req.params;
-  console.log(userId);
+  const { userId } = req.body;
 
   // find most recent workout (date_created) with that userId
 

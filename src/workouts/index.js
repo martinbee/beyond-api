@@ -1,9 +1,9 @@
 import express from 'express';
 
 import {
-  getAll,
+  list,
   create,
-  get,
+  show,
   update,
 } from './controller';
 
@@ -11,13 +11,11 @@ const router = express.Router();
 
 // /workouts
 router.route('/')
-  .get(getAll);
+  .get(list)
+  .post(create);
 
 router.route('/:id')
-  .get(get)
+  .get(show)
   .patch(update);
-
-router.route('/:userId')
-  .post(create);
 
 export default router;

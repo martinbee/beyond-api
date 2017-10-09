@@ -1,8 +1,8 @@
 import express from 'express';
 
 import {
-  getAll,
-  get,
+  list,
+  show,
   update,
 } from './controller';
 
@@ -10,10 +10,10 @@ const router = express.Router();
 
 // /users
 router.route('/')
-  .get(getAll);
+  .get(list);
 
 router.route('/:id')
-  .get(get)
+  .get(show)
   .patch(update);
 
 export default router;

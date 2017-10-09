@@ -1,9 +1,9 @@
-import getAll from './getAll';
-import get from './get';
+import list from './list';
+import show from './show';
 import update from './update';
 
 export {
-  getAll,
-  get,
+  list,
+  show,
   update,
 };
