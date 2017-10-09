@@ -1,15 +1,16 @@
 import mongoose from 'mongoose';
 
 import Workout from '../model';
+import {
+  getNextLiftType,
+} from '../utilities';
 
 export default async function create(req, res, next) {
   const { userId } = req.body;
-  console.log(userId);
-  const user = mongoose.Types.ObjectId(userId);
-  console.log(user);
+  const userObjectId = mongoose.Types.ObjectId(userId);
 
   const lastWorkoutQuery = {
-    user,
+    user: userObjectId,
   };
   const lastWorkoutFields = {
     liftType: 1,
@@ -19,16 +20,17 @@ export default async function create(req, res, next) {
     createdAt: -1,
   };
 
+  // rethink to get one not an array!
   const lastWorkout = await Workout.find(lastWorkoutQuery, lastWorkoutFields)
     .sort(lastWorkoutSort)
     .limit(1)
     .populate('user');
-  console.log(lastWorkout);
 
-  // find most recent workout (date_created) with that userId
+  const { week, liftType, user } = lastWorkout[0];
 
-  // using that workout get week and lift
-
+  console.log(liftType);
+  const nextLiftType = getNextLiftType(liftType);
+  console.log(nextLiftType);
   // check week and lift for TM bump (if required update user)
   // using lift order constant, if last workout in order and week 3, update
 
