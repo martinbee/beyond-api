@@ -1,32 +1,74 @@
+// refactor to await or promises
 import mongoose from 'mongoose';
 
 import Workout from '../model';
+import User from '../../users/model';
 import liftOrder from '../data/liftOrder';
+import {
+  isValidObjectId,
+} from '../../utilities';
 import {
   updateUserTrainingMax,
   getExercises,
 } from '../utilities';
 
-const createFirstWorkout = (userId, { req, res, next }) => {
-  res.send(`${userId} wants to create their first workout`);
+const createFirstWorkout = (userId, { res, next }) => {
+  User.findById(userId).exec((err, user) => {
+    if (err) return next(err);
+
+    const { trainingMax } = user;
+
+    const liftType = liftOrder[0];
+    const liftTrainingMax = trainingMax[liftType];
+    const week = 1;
+    const exercises = getExercises(liftTrainingMax, week);
+
+    const newWorkoutProps = {
+      user,
+      liftType,
+      week,
+      exercises,
+    };
+
+    return Workout.create(newWorkoutProps, (error, workout) => {
+      if (error) return next(error);
+
+      return res.send(workout);
+    });
+  });
+};
+
+const getLiftTypeIndex = liftType => liftOrder.indexOf(liftType);
+
+const shouldRestartLiftOrder = (liftType) => {
+  console.log(liftType);
+  const liftTypeIndex = getLiftTypeIndex(liftType);
+  console.log(liftTypeIndex === liftOrder.length - 1);
+
+  return liftTypeIndex === liftOrder.length - 1;
 };
 
 const getNextLiftType = (lastLiftType) => {
-  const lastLiftTypeIndex = liftOrder.indexOf(lastLiftType);
-  const restartOrder = lastLiftTypeIndex === liftOrder.length - 1;
+  if (shouldRestartLiftOrder(lastLiftType)) return liftOrder[0];
 
-  if (restartOrder) return liftOrder[0];
-
-  const nextLiftType = liftOrder[lastLiftTypeIndex + 1];
+  const nextLiftType = liftOrder[getLiftTypeIndex(lastLiftType) + 1];
 
   return nextLiftType;
 };
 
 const isEndOfMesocycle = (week, liftType) => {
   const isLastWeekOfCycle = week === 3;
-  const isLastLiftOfCycle = liftOrder.indexOf(liftType) === liftOrder.length - 1;
+  const isLastLiftOfCycle = shouldRestartLiftOrder(liftType);
 
   return isLastWeekOfCycle && isLastLiftOfCycle;
+};
+
+const getNewWorkoutWeek = (week, liftType) => {
+  if (isEndOfMesocycle(week, liftType)) return 1;
+
+  if (shouldRestartLiftOrder(liftType)) return week + 1;
+
+  return week;
 };
 
 const addNewWorkout = (lastWorkoutCursor, { res, next }) => {
@@ -37,7 +79,6 @@ const addNewWorkout = (lastWorkoutCursor, { res, next }) => {
   const trainingMax = (
     isEndOfMesocycle(week, liftType) ? updateUserTrainingMax() : user.trainingMax
   );
-  // update week to 1 if end of mesocycle
 
   const nextLiftType = getNextLiftType(liftType);
   const liftTrainingMax = trainingMax[nextLiftType];
@@ -46,21 +87,24 @@ const addNewWorkout = (lastWorkoutCursor, { res, next }) => {
   const newWorkoutProps = {
     user,
     liftType: nextLiftType,
-    week: week + 1,
+    week: getNewWorkoutWeek(week, liftType),
     exercises,
   };
 
-  res.send(newWorkoutProps);
-  //Workout.create(object)
-    //.exec((err, workout) => {
-      //if (err) return next(err);
+  Workout.create(newWorkoutProps, (err, workout) => {
+    if (err) return next(err);
 
-      //return res.send(workout);
-    //});
+    return res.send(workout);
+  });
 };
+
+const invalidIdError = 'Invalid id passed. Must be valid mongo object id.';
 
 export default function create(req, res, next) {
   const { userId } = req.body;
+
+  if (!isValidObjectId(userId)) return next(new Error(invalidIdError));
+
   const userObjectId = mongoose.Types.ObjectId(userId);
 
   const lastWorkoutQuery = {
@@ -77,7 +121,7 @@ export default function create(req, res, next) {
   // refactor express args into spread args? pull callback out below?
 
   // can't sort using findOne, have to grab all, limit, then use cursor
-  Workout.find(lastWorkoutQuery, lastWorkoutFields)
+  return Workout.find(lastWorkoutQuery, lastWorkoutFields)
     .sort(lastWorkoutSort)
     .limit(1)
     .populate('user', 'trainingMax')
