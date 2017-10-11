@@ -1,7 +1,3 @@
-// handle errors
-// handle first workout condition
-// add workout calculations
-// create new workout
 import mongoose from 'mongoose';
 
 import Workout from '../model';
@@ -10,48 +6,6 @@ import {
   updateUserTrainingMax,
   getExercises,
 } from '../utilities';
-
-//export default function calculatePercentages(trainingMax, week) {
-  //const corePercentages = getCorePercentages(trainingMax, week);
-  //const warmUpPercentages = getWarmUpPercentages(corePercentages, trainingMax);
-
-  //// determine percentages
-  //const highestCoreLift = corePercentages[corePercentages.length - 1];
-  //const jokerPercentages = getJokerPercentages(highestCoreLift);
-  //const firstSetLastPercentage = corePercentages[0];
-
-  //// determine sets/reps/words
-  //const warmUpSets = warmUpPercentages.map((percentage, index) => ({
-    //key: `wm${index}`,
-    //text: '3-5 reps',
-    //percentage,
-  //}));
-
-  //const coreSets = corePercentages.map((percentage, index) => ({
-    //key: `cs${index}`,
-    //text: getCoreSetText(week, index),
-    //percentage,
-  //}));
-
-  //const jokerSets = jokerPercentages.map((percentage, index) => ({
-    //key: `jk${index}`,
-    //text: 'Reps depend on how you feel',
-    //percentage,
-  //}));
-
-  //const firstSetLastSet = {
-    //key: 'fsl',
-    //text: '3-5 reps and 3-5 sets',
-    //percentage: firstSetLastPercentage,
-  //};
-
-  //return [
-    //...warmUpSets,
-    //...coreSets,
-    //...jokerSets,
-    //firstSetLastSet,
-  //];
-//}
 
 const createFirstWorkout = (userId, { req, res, next }) => {
   res.send(`${userId} wants to create their first workout`);
@@ -97,10 +51,7 @@ const addNewWorkout = (lastWorkoutCursor, { res, next }) => {
   };
 
   res.send(newWorkoutProps);
-  //const newWorkout = new Workout(newWorkoutProps);
-
-  //newWorkout
-    //.save()
+  //Workout.create(object)
     //.exec((err, workout) => {
       //if (err) return next(err);
 
@@ -134,9 +85,9 @@ export default function create(req, res, next) {
       if (err) return next(err);
 
       const expressArgs = { req, res, next };
-      const isFirstWorkout = !lastWorkoutCursor.length;
+      const noWorkouts = !lastWorkoutCursor.length;
 
-      if (isFirstWorkout) return createFirstWorkout(userId, expressArgs);
+      if (noWorkouts) return createFirstWorkout(userId, expressArgs);
 
       return addNewWorkout(lastWorkoutCursor, expressArgs);
     });

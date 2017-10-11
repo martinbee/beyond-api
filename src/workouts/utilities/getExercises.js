@@ -1,3 +1,6 @@
+const warmupSetsCount = process.env.WARMUP_SETS_COUNT || 3;
+const jokerSetsCount = process.env.JOKER_SETS_COUNT || 2;
+const firstSetLastSetsCount = process.env.FIRST_SET_LAST_COUNT || 3;
 const weekPercentages = [
   [65, 75, 85],
   [70, 80, 90],
@@ -20,37 +23,41 @@ const getCoreLiftExercise = (trainingMax, week) => {
   };
 };
 
-const getWarmupExercise = (coreLiftSets, trainingMax) => {
+const getWarmupExercise = (lowestCoreLiftWeight, trainingMax) => {
   const tenPercentOfTrainingMax = getWeight(trainingMax, 10);
-  const lowestCoreLift = coreLiftSets[0];
+  const warmupSets = [];
 
-  const warmUpSetCount = 3;
-  const warmUpSets = [];
+  for (let i = 0; i < warmupSetsCount; i += 1) {
+    const lowestWarmupSetWeight = warmupSets.length && warmupSets[0].weight;
+    const newLowestLift = lowestWarmupSetWeight || lowestCoreLiftWeight;
 
-  for (let i = 0; i < warmUpSetCount; i += 1) {
-    const newLowestLift = warmUpSets[0] || lowestCoreLift;
-    const warmUpSet = newLowestLift - tenPercentOfTrainingMax;
+    const warmupSet = {
+      weight: newLowestLift - tenPercentOfTrainingMax,
+      reps: 0,
+    };
 
-    warmUpSets.unshift(warmUpSet);
+    warmupSets.unshift(warmupSet);
   }
 
   return {
     type: 'warmup',
-    sets: warmUpSets,
+    sets: warmupSets,
   };
 };
 
-const getJokerExercise = (coreLiftSets) => {
-  const highestCoreLift = coreLiftSets[coreLiftSets.length - 1];
-
-  const jokerSetsCount = 2;
+const getJokerExercise = (highestCoreLiftWeight) => {
   const jokerSets = [];
 
   for (let i = 0; i < jokerSetsCount; i += 1) {
-    const newHighestLift = jokerSets[jokerSets.length - 1] || highestCoreLift;
+    const highestJokerSetWeight = jokerSets.length && jokerSets[jokerSets.length - 1].weight;
+    const newHighestLift = highestJokerSetWeight || highestCoreLiftWeight;
+
     const tenPercentOfHighestLift = getWeight(newHighestLift, 10);
 
-    const jokerSet = newHighestLift + tenPercentOfHighestLift;
+    const jokerSet = {
+      weight: newHighestLift + tenPercentOfHighestLift,
+      reps: 0,
+    };
 
     jokerSets.push(jokerSet);
   }
@@ -61,16 +68,39 @@ const getJokerExercise = (coreLiftSets) => {
   };
 };
 
+const getFirstSetLastExercise = (lowestCoreLiftWeight) => {
+  const firstSetLastSets = [];
+
+  for (let i = 0; i < firstSetLastSetsCount; i += 1) {
+    const firstSetLastSet = {
+      weight: lowestCoreLiftWeight,
+      reps: 0,
+    };
+
+    firstSetLastSets.push(firstSetLastSet);
+  }
+
+  return {
+    type: 'firstSetLast',
+    sets: firstSetLastSets,
+  };
+};
+
 export default function getExcercises(trainingMax, week) {
   const coreLiftExercise = getCoreLiftExercise(trainingMax, week);
   const coreLiftSets = coreLiftExercise.sets;
 
-  const warmupExercise = getWarmupExercise(coreLiftSets, trainingMax);
-  const jokerExercise = getJokerExercise(coreLiftSets);
+  const lowestCoreLiftWeight = coreLiftSets[0].weight;
+  const highestCoreLiftWeight = coreLiftSets[coreLiftSets.length - 1].weight;
+
+  const warmupExercise = getWarmupExercise(lowestCoreLiftWeight, trainingMax);
+  const jokerExercise = getJokerExercise(highestCoreLiftWeight);
+  const firstSetLastExercise = getFirstSetLastExercise(lowestCoreLiftWeight);
 
   return [
     coreLiftExercise,
     warmupExercise,
     jokerExercise,
+    firstSetLastExercise,
   ];
 }
