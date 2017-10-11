@@ -42,7 +42,7 @@ const WorkoutSchema = new Schema(
     },
     mobilityWork: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     exercises: [ExerciseSchema],
   },
