@@ -41,9 +41,7 @@ const createFirstWorkout = (userId, { res, next }) => {
 const getLiftTypeIndex = liftType => liftOrder.indexOf(liftType);
 
 const shouldRestartLiftOrder = (liftType) => {
-  console.log(liftType);
   const liftTypeIndex = getLiftTypeIndex(liftType);
-  console.log(liftTypeIndex === liftOrder.length - 1);
 
   return liftTypeIndex === liftOrder.length - 1;
 };
@@ -71,17 +69,20 @@ const getNewWorkoutWeek = (week, liftType) => {
   return week;
 };
 
-const addNewWorkout = (lastWorkoutCursor, { res, next }) => {
-  const lastWorkout = lastWorkoutCursor[0];
+const addNewWorkout = (lastWorkoutArray, { res, next }) => {
+  const lastWorkout = lastWorkoutArray[0];
   const { week, liftType, user } = lastWorkout;
+  const { _id, trainingMax } = user;
 
   // updateUserTrainingMax weird pattern?
-  const trainingMax = (
-    isEndOfMesocycle(week, liftType) ? updateUserTrainingMax() : user.trainingMax
+  const currentTrainingMax = (
+    isEndOfMesocycle(week, liftType) ?
+      updateUserTrainingMax(_id, trainingMax, next) :
+      trainingMax
   );
 
   const nextLiftType = getNextLiftType(liftType);
-  const liftTrainingMax = trainingMax[nextLiftType];
+  const liftTrainingMax = currentTrainingMax[nextLiftType];
   const exercises = getExercises(liftTrainingMax, week);
 
   const newWorkoutProps = {
@@ -105,10 +106,8 @@ export default function create(req, res, next) {
 
   if (!isValidObjectId(userId)) return next(new Error(invalidIdError));
 
-  const userObjectId = mongoose.Types.ObjectId(userId);
-
   const lastWorkoutQuery = {
-    user: userObjectId,
+    user: mongoose.Types.ObjectId(userId),
   };
   const lastWorkoutFields = {
     liftType: 1,
@@ -125,14 +124,14 @@ export default function create(req, res, next) {
     .sort(lastWorkoutSort)
     .limit(1)
     .populate('user', 'trainingMax')
-    .exec((err, lastWorkoutCursor) => {
+    .exec((err, lastWorkoutArray) => {
       if (err) return next(err);
 
       const expressArgs = { req, res, next };
-      const noWorkouts = !lastWorkoutCursor.length;
+      const noWorkouts = !lastWorkoutArray.length;
 
       if (noWorkouts) return createFirstWorkout(userId, expressArgs);
 
-      return addNewWorkout(lastWorkoutCursor, expressArgs);
+      return addNewWorkout(lastWorkoutArray, expressArgs);
     });
 }
