@@ -1,9 +1,11 @@
 import User from '../model';
 
-export default function list(req, res, next) {
-  User.find().exec((err, users) => {
-    if (err) return next(err);
+export default async function list(req, res, next) {
+  try {
+    const users = await User.find();
 
-    return res.send(users);
-  });
+    res.send(users);
+  } catch (err) {
+    next(err);
+  }
 }

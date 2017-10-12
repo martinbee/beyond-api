@@ -1,14 +1,14 @@
 import User from '../model';
 
-export default function update(req, res, next) {
+export default async function update(req, res, next) {
   const { id } = req.params;
   const updates = req.body;
 
-  User
-    .findByIdAndUpdate(id, updates, { new: true })
-    .exec((err, user) => {
-      if (err) return next(err);
+  try {
+    const user = await User.findByIdAndUpdate(id, updates, { new: true });
 
-      return res.send(user);
-    });
+    res.send(user || {});
+  } catch (err) {
+    next(err);
+  }
 }

@@ -4,16 +4,20 @@ import {
   isValidObjectId,
 } from '../../utilities';
 
-const invalidIdError = 'Invalid id passed. Must be valid mongo object id.';
+const invalidIdError = (
+  new Error('Invalid id passed. Must be valid mongo object id.')
+);
 
-export default function show(req, res, next) {
+export default async function show(req, res, next) {
   const { id } = req.params;
 
-  if (!isValidObjectId(id)) return next(new Error(invalidIdError));
+  if (!isValidObjectId(id)) return next(invalidIdError);
 
-  return User.findById(id).exec((err, user) => {
-    if (err) return next(err);
+  try {
+    const user = await User.findById(id);
 
     return res.send(user || {});
-  });
+  } catch (err) {
+    return next(err);
+  }
 }
