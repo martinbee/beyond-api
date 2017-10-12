@@ -11,12 +11,15 @@ const options = {
   useMongoClient: true,
 };
 
-export default function connectMongoose() {
+export default async function connectMongoose() {
   console.log('Connecting mongoose to mongo...');
 
-  mongoose.connect(DB_URI, options, (err) => {
-    if (err) throw new Error(err.message);
+  try {
+    await mongoose.connect(DB_URI, options);
 
     console.log('Mongoose connected!');
-  });
+    throw new Error('test');
+  } catch (err) {
+    console.log(`Error connecting to mongo: ${err.message}`);
+  }
 }
