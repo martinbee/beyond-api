@@ -7,15 +7,17 @@ import {
   invalidIdError,
 } from '../../utilities/errors';
 
+// move checking id logic into a pre call
 export default function show(req, res, next) {
-  const { id } = req.params;
+  const { workoutId } = req.params;
 
-  if (!isValidObjectId(id)) return next(invalidIdError);
+  if (!isValidObjectId(workoutId)) return next(invalidIdError);
 
+  return Workout
+    .findById(workoutId)
+    .exec((err, workout) => {
+      if (err) return next(err);
 
-  return Workout.findById(id).exec((err, workout) => {
-    if (err) return next(err);
-
-    return res.send(workout || {});
-  });
+      return res.send(workout || {});
+    });
 }

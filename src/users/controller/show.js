@@ -8,11 +8,11 @@ import {
 } from '../../utilities/errors';
 
 export default function show(req, res, next) {
-  const { id } = req.params;
+  const { userId } = req.params;
 
-  if (!isValidObjectId(id)) return next(invalidIdError);
+  if (!isValidObjectId(userId)) return next(invalidIdError);
 
-  return User.findById(id).exec((err, user) => {
+  return User.findById(userId).exec((err, user) => {
     if (err) return next(err);
 
     return res.send(user || {});

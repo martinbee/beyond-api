@@ -1,4 +1,5 @@
 import express from 'express';
+import workoutsRouter from '../workouts';
 
 import {
   list,
@@ -12,8 +13,10 @@ const router = express.Router();
 router.route('/')
   .get(list);
 
-router.route('/:id')
+router.route('/:userId')
   .get(show)
   .patch(update);
+
+router.use('/:userId/workouts', workoutsRouter);
 
 export default router;

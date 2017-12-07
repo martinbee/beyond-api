@@ -1,9 +1,20 @@
+import mongoose from 'mongoose';
+
 import Workout from '../model';
 
 export default function list(req, res, next) {
-  Workout.find().exec((err, workouts) => {
-    if (err) return next(err);
+  const { userId } = req.params;
 
-    return res.send(workouts);
-  });
+  const findUserWorkoutsQuery = {
+    user: mongoose.Types.ObjectId(userId),
+  };
+
+  Workout
+    .find(findUserWorkoutsQuery)
+    .sort({ createdAt: -1 })
+    .exec((err, workouts) => {
+      if (err) return next(err);
+
+      return res.send(workouts);
+    });
 }
