@@ -27,6 +27,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  week: {
+    type: Number,
+    default: 1,
+  },
   trainingMax: TrainingMaxSchema,
 });
 
