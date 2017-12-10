@@ -17,6 +17,7 @@ router.route('/:userId')
   .get(show)
   .patch(update);
 
+// Sets up /users/:userId/workouts
 router.use('/:userId/workouts', workoutsRouter);
 
 export default router;

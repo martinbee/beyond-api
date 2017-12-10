@@ -1,10 +1,5 @@
-# Beyond by Jim Wendler Workout app
-
+# Beyond 5/3/1 by Jim Wendler Workout app API
 ### Built for personal use
 
-## [Demo](https://martinbee.github.io/beyond-web-app)
-## [Development Plan](./docs/plan.md)
-## [Structure](./docs/structure.md)
-## [Rules](./docs/rules.md)
-## [Assistance Work](./docs/assistance.md)
-## [Data](./docs/data.md)
+## [API](./docs/api.md)
+
