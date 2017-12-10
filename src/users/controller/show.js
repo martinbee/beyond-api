@@ -3,15 +3,16 @@ import User from '../model';
 import {
   isValidObjectId,
 } from '../../utilities';
-
-const invalidIdError = 'Invalid id passed. Must be valid mongo object id.';
+import {
+  invalidIdError,
+} from '../../utilities/errors';
 
 export default function show(req, res, next) {
-  const { id } = req.params;
+  const { userId } = req.params;
 
-  if (!isValidObjectId(id)) return next(new Error(invalidIdError));
+  if (!isValidObjectId(userId)) return next(invalidIdError);
 
-  return User.findById(id).exec((err, user) => {
+  return User.findById(userId).exec((err, user) => {
     if (err) return next(err);
 
     return res.send(user || {});

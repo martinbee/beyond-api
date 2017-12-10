@@ -5,6 +5,7 @@ yesterday.setDate(yesterday.getDate() - 1);
 export default [
   {
     liftType: 'press',
+    trainingMax: 100,
     week: 1,
     mobilityWork: true,
     createdAt: yesterday.toISOString(),
@@ -130,6 +131,7 @@ export default [
   },
   {
     liftType: 'deadLift',
+    trainingMax: 225,
     week: 1,
     mobilityWork: true,
     createdAt: today.toISOString(),

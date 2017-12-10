@@ -36,6 +36,10 @@ const WorkoutSchema = new Schema(
       type: String,
       required: true,
     },
+    trainingMax: {
+      type: Number,
+      required: true,
+    },
     week: {
       type: Number,
       required: true,

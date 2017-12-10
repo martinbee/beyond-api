@@ -7,14 +7,14 @@ import {
   update,
 } from './controller';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // /workouts
 router.route('/')
   .get(list)
   .post(create);
 
-router.route('/:id')
+router.route('/:workoutId')
   .get(show)
   .patch(update);
 

@@ -1,5 +1,6 @@
 export default {
   username: 'Martin',
+  week: '1',
   trainingMax: {
     press: 100,
     deadLift: 225,
