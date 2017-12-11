@@ -4,6 +4,7 @@ import {
   connectMongoose,
   //initStubData,
   setupMiddleware,
+  setupCors,
   setupRoutes,
   setupErrorHandling,
 } from './utilities';
@@ -19,6 +20,8 @@ const PORT = process.env.PORT || 3000;
 //initStubData();
 
 setupMiddleware(app);
+// Development only
+setupCors(app);
 setupRoutes(app, routes);
 setupErrorHandling(app);
 
