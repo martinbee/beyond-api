@@ -130,7 +130,7 @@ export default [
     ],
   },
   {
-    liftType: 'deadLift',
+    liftType: 'deadlift',
     trainingMax: 225,
     week: 1,
     mobilityWork: true,

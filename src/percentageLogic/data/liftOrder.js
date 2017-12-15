@@ -1,6 +1,6 @@
 export default [
   'press',
-  'deadLift',
+  'deadlift',
   'bench',
   'squat',
 ];

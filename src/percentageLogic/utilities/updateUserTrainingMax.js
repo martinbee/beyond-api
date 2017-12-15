@@ -1,6 +1,6 @@
 import User from '../../users/model';
 // refactor to be method on user
-const legLifts = ['deadLift', 'squat'];
+const legLifts = ['deadlift', 'squat'];
 
 export default function updateUserTrainingMax(userId, trainingMax, next) {
   const mongoPropFreeTrainingMax = trainingMax.toJSON();

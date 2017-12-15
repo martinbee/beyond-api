@@ -8,7 +8,7 @@ const TrainingMaxSchema = new Schema({
     type: Number,
     required: true,
   },
-  deadLift: {
+  deadlift: {
     type: Number,
     required: true,
   },
