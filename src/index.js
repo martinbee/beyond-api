@@ -2,7 +2,7 @@ import express from 'express';
 
 import {
   connectMongoose,
-  initStubData,
+  seedDb,
   setupMiddleware,
   setupCors,
   setupRoutes,
@@ -15,13 +15,10 @@ connectMongoose();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Refactor below code so that it checks itself
-// if init of data is needed, uncomment:
-initStubData();
+seedDb();
 
 setupMiddleware(app);
-// Development only
-setupCors(app);
+setupCors(app); // Development only
 setupRoutes(app, routes);
 setupErrorHandling(app);
 

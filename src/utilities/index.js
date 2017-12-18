@@ -1,5 +1,5 @@
 import connectMongoose from './connectMongoose';
-import initStubData from './initStubData';
+import seedDb from './seedDb';
 import setupErrorHandling from './setupErrorHandling';
 import setupMiddleware from './setupMiddleware';
 import setupRoutes from './setupRoutes';
@@ -8,7 +8,7 @@ import isValidObjectId from './isValidObjectId';
 
 export {
   connectMongoose,
-  initStubData,
+  seedDb,
   setupErrorHandling,
   setupMiddleware,
   setupRoutes,
