@@ -9,12 +9,19 @@ import {
 
 // move checking id logic into a pre call
 export default function show(req, res, next) {
-  const { workoutId } = req.params;
+  const { userId, workoutId } = req.params;
 
-  if (!isValidObjectId(workoutId)) return next(invalidIdError);
+  const hasValidIds = isValidObjectId(userId) && isValidObjectId(workoutId);
+
+  if (!hasValidIds) return next(invalidIdError);
+
+  const query = {
+    _id: workoutId,
+    user: userId,
+  };
 
   return Workout
-    .findById(workoutId)
+    .findOne(query)
     .exec((err, workout) => {
       if (err) return next(err);
 
