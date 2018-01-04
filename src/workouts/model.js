@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const SetSchema = new Schema({
-  _id: false,
   weight: {
     type: Number,
     required: true,
@@ -15,7 +14,6 @@ const SetSchema = new Schema({
 });
 
 const ExerciseSchema = new Schema({
-  _id: false,
   type: {
     type: String,
     required: true,
